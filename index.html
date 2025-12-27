@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veiluxe | Exclusive Only</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #050505;
+      --panel: #0f0f12;
+      --gold: #d6b36a;
+      --soft: #bdb8b0;
+      --curtain: #2a0f15;
+      --curtain-shadow: #1a0a0f;
+      --highlight: #f2e6c9;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: radial-gradient(circle at top, #111 0%, var(--bg) 55%);
+      color: var(--highlight);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      width: min(1100px, 92vw);
+      display: grid;
+      gap: 32px;
+    }
+
+    .page {
+      display: none;
+      background: rgba(10, 10, 12, 0.75);
+      border: 1px solid rgba(214, 179, 106, 0.2);
+      border-radius: 24px;
+      padding: 32px clamp(20px, 4vw, 40px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(12px);
+    }
+
+    .page.active {
+      display: grid;
+      gap: 24px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      font-family: "Playfair Display", serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      color: var(--gold);
+    }
+
+    .brand button {
+      border: 1px solid rgba(214, 179, 106, 0.4);
+      background: transparent;
+      color: var(--gold);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .brand button:hover {
+      background: rgba(214, 179, 106, 0.12);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 600;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    input,
+    select {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(214, 179, 106, 0.3);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--highlight);
+      font-size: 0.95rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .primary {
+      background: var(--gold);
+      border: none;
+      color: #1a1207;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .vip-card {
+      border: 1px solid rgba(214, 179, 106, 0.4);
+      padding: 18px 20px;
+      border-radius: 16px;
+      display: grid;
+      gap: 6px;
+      background: linear-gradient(140deg, rgba(214, 179, 106, 0.2), rgba(255, 255, 255, 0.05));
+      font-family: "Playfair Display", serif;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.8rem;
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 480px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: radial-gradient(circle, #0f0f12 0%, #080808 65%);
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.65);
+    }
+
+    .curtain {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 55%;
+      background: linear-gradient(120deg, var(--curtain), var(--curtain-shadow));
+      box-shadow: inset -20px 0 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .curtain::before {
+      content: "";
+      position: absolute;
+      inset: 18px 12px;
+      border-radius: 22px;
+      border: 1px solid rgba(214, 179, 106, 0.18);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 60%);
+    }
+
+    .curtain::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.05) 0 14px,
+        rgba(0, 0, 0, 0.05) 14px 28px
+      );
+      opacity: 0.6;
+      mix-blend-mode: screen;
+    }
+
+    .curtain.left {
+      left: -5%;
+      border-right: 1px solid rgba(214, 179, 106, 0.2);
+      animation: curtainCloseLeft 6s ease-in-out infinite;
+    }
+
+    .curtain.right {
+      right: -5%;
+      border-left: 1px solid rgba(214, 179, 106, 0.2);
+      animation: curtainCloseRight 6s ease-in-out infinite;
+    }
+
+    @keyframes curtainCloseLeft {
+      0%,
+      100% {
+        transform: translateX(-55%);
+      }
+      50% {
+        transform: translateX(0%);
+      }
+    }
+
+    @keyframes curtainCloseRight {
+      0%,
+      100% {
+        transform: translateX(55%);
+      }
+      50% {
+        transform: translateX(0%);
+      }
+    }
+
+    .product {
+      width: min(320px, 60vw);
+      aspect-ratio: 3 / 4;
+      background: linear-gradient(150deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.03));
+      border: 1px solid rgba(214, 179, 106, 0.45);
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: float 5s ease-in-out infinite, spin 14s linear infinite;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+    }
+
+    .product::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(214, 179, 106, 0.4);
+      transform: translateZ(40px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent);
+    }
+
+    .product::after {
+      content: "";
+      position: absolute;
+      inset: 26px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.35), transparent 55%);
+      transform: translateZ(70px);
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: rotateY(-12deg) rotateX(6deg) translateY(0);
+      }
+      50% {
+        transform: rotateY(12deg) rotateX(-4deg) translateY(-12px);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotateY(0deg);
+      }
+      100% {
+        transform: rotateY(360deg);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .brand {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .stage {
+        min-height: 380px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="page active" id="page-registration">
+      <div class="brand">
+        <span>Veiluxe · Only</span>
+        <button type="button" data-next>Enter</button>
+      </div>
+      <h1>Access</h1>
+      <form id="vip-form">
+        <div class="field">
+          <label class="sr-only" for="name">Name</label>
+          <input id="name" name="name" placeholder="Name" required />
+        </div>
+        <div class="field">
+          <label class="sr-only" for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="Email" required />
+        </div>
+        <div class="field">
+          <label class="sr-only" for="phone">Phone</label>
+          <input id="phone" name="phone" placeholder="Phone" required />
+        </div>
+        <div class="field">
+          <label class="sr-only" for="address">Delivery</label>
+          <input id="address" name="address" placeholder="Delivery" required />
+        </div>
+        <div class="field">
+          <label class="sr-only" for="intent">Interest</label>
+          <select id="intent" name="intent" required>
+            <option value="">Interest</option>
+            <option>Collector</option>
+            <option>Private Client</option>
+            <option>Gallery</option>
+          </select>
+        </div>
+        <div class="actions">
+          <button class="primary" type="submit">Issue VIP</button>
+          <div class="vip-card" id="vip-card" hidden>
+            <span>VIP</span>
+            <strong id="vip-name">Holder</strong>
+            <span>Issued</span>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="page" id="page-stage">
+      <div class="brand">
+        <span>Veiluxe</span>
+        <button type="button" data-prev>Back</button>
+      </div>
+      <div class="stage">
+        <div class="curtain left"></div>
+        <div class="curtain right"></div>
+        <div class="product" aria-label="Exclusive product" role="img"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const pageRegistration = document.getElementById("page-registration");
+    const pageStage = document.getElementById("page-stage");
+    const vipForm = document.getElementById("vip-form");
+    const vipCard = document.getElementById("vip-card");
+    const vipName = document.getElementById("vip-name");
+
+    document.querySelector("[data-next]").addEventListener("click", () => {
+      pageRegistration.classList.remove("active");
+      pageStage.classList.add("active");
+    });
+
+    document.querySelector("[data-prev]").addEventListener("click", () => {
+      pageStage.classList.remove("active");
+      pageRegistration.classList.add("active");
+    });
+
+    vipForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      vipName.textContent = name || "VIP";
+      vipCard.hidden = false;
+    });
+  </script>
+</body>
+</html>
